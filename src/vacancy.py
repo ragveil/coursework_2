@@ -176,7 +176,8 @@ class Vacancy(BaseVacancy):
     def __eq__(self, other: object) -> Any:
         if not isinstance(other, Vacancy):
             return NotImplemented
-        return self.salary == other.salary
+        if self.ids != other.ids:
+            return self.salary == other.salary
 
     def __lt__(self, other: object) -> Any:
         if not isinstance(other, Vacancy):
@@ -207,8 +208,8 @@ class Vacancy(BaseVacancy):
     def from_json_to_list(cls, vacancies: list[dict]) -> list:
         result = []
         for vacancy in vacancies:
-            start = vacancy.get("salary").get("from")
-            stop = vacancy.get("salary").get("to")
+            start = vacancy.get("salary", {}).get("from")
+            stop = vacancy.get("salary", {}).get("to")
             if start and start > 0:
                 if stop and stop > 0:
                     salary = (start + stop) / 2
@@ -220,18 +221,18 @@ class Vacancy(BaseVacancy):
                 salary = 0
             result.append(
                 cls(
-                    vacancy.get("id"),
-                    vacancy.get("name"),
+                    vacancy.get("id", 0),
+                    vacancy.get("name", ''),
                     salary,
-                    vacancy.get("alternate_url"),
+                    vacancy.get("alternate_url", ''),
                     vacancy.get("employer", {}).get("name"),
-                    vacancy.get("area").get("name"),
-                    vacancy.get("snippet").get("requirement"),
-                    vacancy.get("snippet").get("responsibility"),
-                    vacancy.get("schedule").get("name"),
-                    vacancy.get("experience").get("name"),
-                    vacancy.get("employment").get("name"),
-                    vacancy.get("salary_range").get("mode").get("name"),
+                    vacancy.get("area", {}).get("name"),
+                    vacancy.get("snippet", {}).get("requirement"),
+                    vacancy.get("snippet", {}).get("responsibility"),
+                    vacancy.get("schedule", {}).get("name"),
+                    vacancy.get("experience", {}).get("name"),
+                    vacancy.get("employment", {}).get("name"),
+                    vacancy.get("salary_range", {}).get("mode").get("name"),
                 )
             )
         return result
