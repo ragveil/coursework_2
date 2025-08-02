@@ -7,6 +7,10 @@ from src.vacancy import Vacancy
 
 
 class BaseApi(ABC):
+    """
+    Абстрактный класс.
+    """
+
     @abstractmethod
     def __init__(self) -> None:
         pass
@@ -17,9 +21,16 @@ class BaseApi(ABC):
 
 
 class HeadHunterApi(BaseApi):
+    """
+    Класс для получения данных с HeadHunter.
+    """
+
     def __init__(self) -> None:
+        """
+        Инициализирует данные для api.
+        """
         self.url = "https://api.hh.ru/vacancies"
-        self.params = {
+        self.params: Any = {
             "text": "",
             "area": 113,
             "per_page": 10,
@@ -29,7 +40,8 @@ class HeadHunterApi(BaseApi):
         self.vacancies: list[Vacancy] = []
         super().__init__()
 
-    def get_data(self, keyword: str) -> Any:
+    def get_data(self, keyword: str | None) -> Any:
+        """Формирует запрос и получает данные о вакансиях."""
         self.params["text"] = keyword
         response = requests.get(self.url, params=self.params, headers=self.headers)
         if response.status_code != 200:

@@ -3,7 +3,10 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 
-class BaseVacancy(ABC):
+class BaseVacancy(ABC):  # pragma: no cover
+    """
+    Абстрактный класс.
+    """
 
     @abstractmethod
     def __init__(self) -> None:
@@ -27,6 +30,10 @@ class BaseVacancy(ABC):
 
 
 class Vacancy(BaseVacancy):
+    """
+    Класс вакансий. Для экономии ресурсов используются слоты.
+    """
+
     __slots__ = {
         "__ids": "id вакансии",
         "__title": "Название вакансии",
@@ -96,18 +103,15 @@ class Vacancy(BaseVacancy):
         re.sub(pattern, "", requirements)
         return requirements if requirements else "Нет требований"
 
-
     @staticmethod
     def __validate_experience(experience: str) -> str:
-        return experience if experience else 'Опыт не указан'
-
+        return experience if experience else "Опыт не указан"
 
     @staticmethod
     def __validate_responsibility(responsibility: str) -> str:
         pattern = r"<[a-zA-Z/]{4,}>"
         responsibility = re.sub(pattern, "", responsibility)
-        return responsibility if responsibility else 'Нет описания'
-
+        return responsibility if responsibility else "Нет описания"
 
     @property
     def ids(self) -> int:
@@ -158,6 +162,10 @@ class Vacancy(BaseVacancy):
         return self.__period.lower()
 
     def as_dict(self) -> dict:
+        """
+        Представление вакансии в виде словаря.
+        :return:
+        """
         return {
             "ids": self.ids,
             "title": self.title,
@@ -190,6 +198,10 @@ class Vacancy(BaseVacancy):
         return self.salary > other.salary
 
     def __str__(self) -> str:
+        """
+        Строковое представление вакансии.
+        :return:
+        """
         return (
             f"ID: {self.ids}"
             f"\nВакансия: {self.title}"
@@ -206,6 +218,11 @@ class Vacancy(BaseVacancy):
 
     @classmethod
     def from_json_to_list(cls, vacancies: list[dict]) -> list:
+        """
+        Метод для преобразования списка словарей в объекты класса.
+        :param vacancies:
+        :return:
+        """
         result = []
         for vacancy in vacancies:
             start = vacancy.get("salary", {}).get("from")
@@ -222,9 +239,9 @@ class Vacancy(BaseVacancy):
             result.append(
                 cls(
                     vacancy.get("id", 0),
-                    vacancy.get("name", ''),
+                    vacancy.get("name", ""),
                     salary,
-                    vacancy.get("alternate_url", ''),
+                    vacancy.get("alternate_url", ""),
                     vacancy.get("employer", {}).get("name"),
                     vacancy.get("area", {}).get("name"),
                     vacancy.get("snippet", {}).get("requirement"),

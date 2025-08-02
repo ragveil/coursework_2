@@ -3,13 +3,14 @@ import json
 import os
 from abc import ABC, abstractmethod
 
-from config import ROOT_DIR
 from src.vacancy import Vacancy
-
-data_folder = os.path.join(ROOT_DIR, "data/")
 
 
 class Saver(ABC):
+    """
+    Абстрактный класс для работы с файлами.
+    """
+
     @abstractmethod
     def add_vacancy(self, vacancy: Vacancy) -> None:
         pass
@@ -24,8 +25,12 @@ class Saver(ABC):
 
 
 class JSONSaver(Saver):
+    """
+    Класс для работы с файлами в формате JSON.
+    """
+
     def __init__(self, filename: str) -> None:
-        self.__filename = data_folder + filename + ".json"
+        self.__filename = filename
 
     def get_vacancies(self) -> list[Vacancy]:
         if not os.path.exists(self.__filename):
@@ -52,8 +57,12 @@ class JSONSaver(Saver):
 
 
 class CSVSaver(Saver):
+    """
+    Класс для работы файлами в формате CSV.
+    """
+
     def __init__(self, filename: str) -> None:
-        self.__filename = data_folder + filename + ".csv"
+        self.__filename = filename
 
     def get_vacancies(self) -> list[Vacancy]:
         if not os.path.exists(self.__filename):

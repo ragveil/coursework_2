@@ -1,11 +1,16 @@
-from src.api import HeadHunterApi
-from src.saver import CSVSaver, JSONSaver
-from src.utils import print_result, search_by_salary, search_vacancy, show_top, sort_by_salary
-from src.vacancy import Vacancy
-from src.xlsx_saver import ExcelSaver
+from src.api import HeadHunterApi  # pragma: no cover
+from src.constants import csv_file, json_file, xlsx_file  # pragma: no cover
+from src.saver import CSVSaver, JSONSaver  # pragma: no cover
+from src.utils import print_result, search_by_salary, search_vacancy, show_top, sort_by_salary  # pragma: no cover
+from src.vacancy import Vacancy  # pragma: no cover
+from src.xlsx_saver import ExcelSaver  # pragma: no cover
 
 
-def user_interaction():
+def user_interaction():  # pragma: no cover
+    """
+    Основная функция программы, объединяющая все модули.
+    :return:
+    """
     global saver
     hh_api = HeadHunterApi()
     message = "Нет сохраненных вакансий."
@@ -14,9 +19,9 @@ def user_interaction():
     while extension != "JSON" and extension != "CSV":
         extension = input('Введите "JSON" или "CSV" для выбора.').upper()
     if extension == "JSON":
-        saver = JSONSaver("vacancies")
+        saver = JSONSaver(json_file)
     elif extension == "CSV":
-        saver = CSVSaver("vacancies")
+        saver = CSVSaver(csv_file)
 
     while True:
         print("Меню:")
@@ -34,9 +39,7 @@ def user_interaction():
             user_choice = input("Выберите подходящий пункт из меню.")
 
         if user_choice == "1":
-            keyword = input(
-                "Введите ключевое слово для поиска вакансий или оставьте это поле пустым для вывода всех вакансий."
-            )
+            keyword = input("Введите ключевое слово для поиска вакансий.")
             try:
                 got_vacancies = hh_api.get_data(keyword)
                 listed_vacancies = Vacancy.from_json_to_list(got_vacancies)
@@ -124,7 +127,7 @@ def user_interaction():
             if not vacancies:
                 print(message)
                 continue
-            ExcelSaver("vacancies").save_to_file(vacancies)
+            ExcelSaver(xlsx_file).save_to_file(vacancies)
             print("Таблица вакансий в XLSX успешно сформирована.")
 
         elif user_choice == "7":
@@ -142,5 +145,5 @@ def user_interaction():
             print("парам-пам-пам")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     user_interaction()
