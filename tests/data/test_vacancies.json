@@ -1,0 +1,44 @@
+[
+    {
+        "ids": 12345678,
+        "title": "Python Dev",
+        "salary": 150000,
+        "url": "url",
+        "company": "Microsoft CORP.",
+        "area": "Moscow",
+        "requirements": "Python",
+        "responsibility": "Hard coding",
+        "schedule": "Полный рабочий день",
+        "experience": "Без опыта",
+        "employment": "Полная занятость",
+        "period": "за месяц"
+    },
+    {
+        "ids": 87654321,
+        "title": "Разнорабочий",
+        "salary": 65000,
+        "url": "url2",
+        "company": "Ёшки-Матрёшки",
+        "area": "Кукуево",
+        "requirements": "Начальное образование",
+        "responsibility": "Всё, везде и одновременно",
+        "schedule": "Полный рабочий день",
+        "experience": "Без опыта",
+        "employment": "Полная занятость",
+        "period": "за месяц"
+    },
+    {
+        "ids": 88888888,
+        "title": "Грузчик",
+        "salary": 65000,
+        "url": "url3",
+        "company": "Кирпичи и ко",
+        "area": "Чертокуличинск",
+        "requirements": "Начальное образование",
+        "responsibility": "Скажи спине 'ДО СВИДАНИЯ'",
+        "schedule": "Полный рабочий день",
+        "experience": "Без опыта",
+        "employment": "Полная занятость",
+        "period": "за месяц"
+    }
+]
